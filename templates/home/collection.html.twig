@@ -17,9 +17,15 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Les produits de notre e-commerce</h1>
+        {% if collection == "m" %}
         <a href="{{path("collection", {'collection' : "f"})}}" class="btn btn-sm btn-outline-dark">Collection Femme</a>
-        <a href="{{path("collection", {'collection' : "m"})}}" class="btn btn-sm btn-outline-dark">Collection Homme</a>
+        {% elseif collection == "f" %}
+        <a href="{{path("collection", {'collection' : "m"})}}"class="btn btn-sm btn-outline-dark">Collection Homme</a>
+        {% endif %}
+        <a href="{{path("app_home")}}"class="btn btn-sm btn-outline-dark">Tout voir</a>
+
       </div>
+      
     </div>
   </section>
 
@@ -27,7 +33,7 @@
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {%  for produit in produits %}
+      {%  for produit in produitsCollection %}
         <div class="col">
           <div class="card shadow-sm">
             <img src="/upload/{{produit.photo}}" alt="" width="100%" height="500">

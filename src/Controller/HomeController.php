@@ -288,4 +288,17 @@ class HomeController extends AbstractController
 
         return $this->render('home/contact.html.twig');
     }
+
+    #[Route("/collection/{collection}" , name:"collection")]
+    public function collection(EntityManagerInterface $em, Produit $produit){
+        $collection = $produit->getCollection();
+        $produitsCollection = $em->getRepository(Produit::class)->findBy(['collection' => $produit->getCollection()]);
+
+        return $this->render('home/collection.html.twig', [
+            'produitsCollection' => $produitsCollection,
+            'collection' => $collection
+        ]);
+    }
+
+
 }

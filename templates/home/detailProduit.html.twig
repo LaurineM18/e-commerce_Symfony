@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1 class="mt-4">Détail du produit</h1>
+
+    <div class="row justify-content-md-center align-items-center mt-5">
+        <div class="col-3">
+            <img src="/upload/{{produit.photo}}" alt="" class="img-fluid img-thumbnail border-dark">
+        </div>
+        <div class="col-3 ">  
+        <h1 class="mt-4">{{produit.titre}}</h1>     
+            <div class="mb-4">
+                <p> <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                    width="24" height="24"
+                    viewBox="0 0 24 24"
+                    style=" fill:{{produit.couleur}};"><path d="M 6.2695312 2 C 3.9145313 2 2 3.9155313 2 6.2695312 L 2 17.730469 C 2 20.085469 3.9145313 22 6.2695312 22 L 17.730469 22 C 20.084469 22 22 20.085469 22 17.730469 L 22 6.2695312 C 22 3.9155313 20.085469 2 17.730469 2 L 6.2695312 2 z M 7.0429688 6 L 16.958984 6 C 17.533984 6 18 6.4669688 18 7.0429688 L 18 16.957031 C 18 17.533031 17.533031 18 16.957031 18 L 7.0429688 18 C 6.4669688 18 6 17.533031 6 16.957031 L 6 7.0429688 C 6 6.4669688 6.4669688 6 7.0429688 6 z M 9 9 L 9 15 L 15 15 L 15 9 L 9 9 z"></path></svg> - Taille : {{produit.taille}}</p>
+                <p class="card-text">{{produit.description}}</p>
+            </div>       
+            <div>
+                {%  if produit.stock > 10 %}
+              <p>En stock</p>
+              {% elseif produit.stock > 1 %}
+               <p class="mt-2">Dernières pièces en stock!</p>
+               {% endif %}
+               
+            </div>
+              
+            <div class="">
+            
+                {%  if produit.stock > 0 %}
+                <a href="{{ path("add_panier", {'id' : produit.id}) }}" class="btn  btn-success">Ajouter au panier</a>
+               {% else %}
+               <a href="" class="btn btn-sm btn-outline-dark disabled">Rupture de stock</a>
+               {% endif %}
+
+                 <p class="mt-4 fs-3"><strong>{{produit.prix}} €</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('app_home') }}" class="my-4 btn btn-outline-info">Retour à la liste des produits</a>
+
+{% endblock %}

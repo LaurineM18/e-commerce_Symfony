@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    <h1>Bonjour {{membre}}</h1>
+    <h2 class="mt-4">Mes Commandes</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produits</th>
+                <th></th>
+                <th>Quantité</th>
+                <th>Montant</th>
+                <th>Etat</th>
+                <th>Date Commande</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td>{{ commande.produit.titre}}</td>
+                <td><img src="/upload/{{ commande.produit.photo }}" alt="" width="100"></td>
+                <td>{{ commande.quantite }}</td>
+                <td>{{ commande.montant }} €</td>
+                <td>{{ commande.etat }}</td>
+                <td>{{ commande.dateEnregistrement ? commande.dateEnregistrement|date('d-m-Y') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">pas de commande actuellement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path("app_home") }}" class="btn btn-outline-info">Voir de nouveaux produits</a>
+
+{% endblock %}

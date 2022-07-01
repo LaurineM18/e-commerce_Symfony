@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="container">
+    <h1 class="mt-4">Bienvenue sur My Shop! </h1>
+
+
+<main>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Les produits de notre e-commerce</h1>
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {%  for produit in produits %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src="/upload/{{produit.photo}}" alt="" width="100%" height="500">
+
+            <div class="card-body">
+                <h2>{{produit.titre}}</h2>
+                
+                
+                
+                <p> <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                width="24" height="24"
+                viewBox="0 0 24 24"
+                style=" fill:{{produit.couleur}};"><path d="M 6.2695312 2 C 3.9145313 2 2 3.9155313 2 6.2695312 L 2 17.730469 C 2 20.085469 3.9145313 22 6.2695312 22 L 17.730469 22 C 20.084469 22 22 20.085469 22 17.730469 L 22 6.2695312 C 22 3.9155313 20.085469 2 17.730469 2 L 6.2695312 2 z M 7.0429688 6 L 16.958984 6 C 17.533984 6 18 6.4669688 18 7.0429688 L 18 16.957031 C 18 17.533031 17.533031 18 16.957031 18 L 7.0429688 18 C 6.4669688 18 6 17.533031 6 16.957031 L 6 7.0429688 C 6 6.4669688 6.4669688 6 7.0429688 6 z M 9 9 L 9 15 L 15 15 L 15 9 L 9 9 z"></path></svg> - Taille : {{produit.taille}}</p>
+              <p class="card-text">{{produit.description}}</p>
+              
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                <a href="{{ path('produit_show', {'id': produit.id}) }}" class="btn btn-sm btn-outline-info">Voir</a>
+                {%  if produit.stock > 0 %}
+                <a href="{{ path("add_panier", {'id' : produit.id}) }}" class="btn btn-sm btn-outline-success">Ajouter au panier</a>
+               {% else %}
+               <a href="" class="btn btn-sm btn-outline-dark disabled">Rupture de stock</a>
+               {% endif %}
+                </div>
+
+                <p>{{produit.prix}} €</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+  </div>
+
+</main>
+{% endblock %}

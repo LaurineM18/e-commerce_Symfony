@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <h1 class="mt-4">Panier ({{nbProduits}} articles)</h1>
+    <table class="table align-middle mt-4">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Produits</th>
+                <th scope="col"></th>
+                <th scope="col">Taille</th>
+                <th scope="col">Prix unitaire</th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Montant </th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+        
+        {% for item in produitsPanier %}
+            <tr class="text-center">
+                <td>{{ item.produit.titre }}</td>
+                <td><img src="/upload/{{ item.produit.photo }}" alt="" width="100"></td>
+                <td>{{ item.produit.taille }}</td>
+                <td>{{ item.produit.prix }} €</td>
+                <td>
+                    <a href="{{path('supprimer_produit', {'id': item.produit.id})}}" class="btn btn-outline-secondary">-</a>
+                    <span class="mx-3">{{ item.qte }}</span>
+                    <a href="{{path('ajouter_produit', {'id': item.produit.id})}}" class="btn btn-outline-secondary">+</a>
+                </td>
+                <td>{{ item.qte * item.produit.prix }}  €</td>
+                <td><a href="{{path('supprimer_panier', {'id': item.produit.id})}}"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="24" height="24"
+viewBox="0 0 24 24"
+style=" fill:#e74c3c;"><path d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"></path></svg></a></td>
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+        <tfoot>
+            <tr  class="text-center">
+                <td colSpan="5" class="text-end">
+                Total : 
+                </td>
+                <td>
+                    {{totalPanier}} €
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+        <div class="d-flex justify-content-between">
+        <a href="{{path('vider_panier')}}" class="btn btn-lg btn-warning">Vider le panier</a>
+        <a href="{{path('commande_achat')}}" class="btn btn-lg btn-success">Commander</a>
+        </div>
+
+{% endblock %}

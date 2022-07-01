@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ produit.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Couleur</th>
+                <td>{{ produit.couleur }} <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                width="24" height="24"
+                viewBox="0 0 24 24"
+                style=" fill:{{produit.couleur}};"><path d="M 6.2695312 2 C 3.9145313 2 2 3.9155313 2 6.2695312 L 2 17.730469 C 2 20.085469 3.9145313 22 6.2695312 22 L 17.730469 22 C 20.084469 22 22 20.085469 22 17.730469 L 22 6.2695312 C 22 3.9155313 20.085469 2 17.730469 2 L 6.2695312 2 z M 7.0429688 6 L 16.958984 6 C 17.533984 6 18 6.4669688 18 7.0429688 L 18 16.957031 C 18 17.533031 17.533031 18 16.957031 18 L 7.0429688 18 C 6.4669688 18 6 17.533031 6 16.957031 L 6 7.0429688 C 6 6.4669688 6.4669688 6 7.0429688 6 z M 9 9 L 9 15 L 15 15 L 15 9 L 9 9 z"></path></svg></td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ produit.taille }}</td>
+            </tr>
+            <tr>
+                <th>Collection</th>
+                <td>{{ produit.collection }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src="/upload/{{produit.photo}}" alt="" width="150"></td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ produit.stock }}</td>
+            </tr>
+            <tr>
+                <th>Date_enregistrement</th>
+                <td>{{ produit.dateEnregistrement ? produit.dateEnregistrement|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produit_index') }}" class="btn btn-outline-info">Retour à la liste</a>
+
+    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}" class="btn btn-outline-info">Editer</a>
+
+    {{ include('produit/_delete_form.html.twig') }}
+{% endblock %}

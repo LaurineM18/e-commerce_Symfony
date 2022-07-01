@@ -31,7 +31,11 @@
 
   <div class="album py-5">
     <div class="container">
-
+      {% if collection == "m" %}
+      <h2 class="mb-4">Collection Homme</h2>
+      {% elseif collection == "f" %}
+      <h2 class="mb-4">Collection Femme</h2>
+      {% endif %}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       {%  for produit in produitsCollection %}
         <div class="col">

@@ -25,6 +25,10 @@
                         <a href="{{ path("app_commande_new") }}" class="list-group-item list-group-item-action">Ajouter une commande</a>
                         <a href="{{ path("app_commande_index") }}" class="list-group-item list-group-item-action">Liste des commandes</a>
                     </div>
+                    <h2 class="fs-5 my-3">Gestion des messages</h2>
+                    <div class="list-group">
+                        <a href="{{ path("app_contact_index") }}" class="list-group-item list-group-item-action">Liste des messages reçus</a>
+                    </div>
                 </nav>
                 <div class="col-10">
                     {% block body %}{% endblock %}

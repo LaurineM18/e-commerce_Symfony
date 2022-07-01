@@ -3,21 +3,24 @@
 namespace App\Controller;
 
 use App\Entity\Membre;
+use App\Entity\Contact;
 use App\Entity\Produit;
 use App\Entity\Commande;
+use App\Form\ContactType;
 use App\Form\ConnexionType;
 use App\Form\InscriptionType;
-use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManager;
+use App\Repository\ContactRepository;
+use App\Repository\CommandeRepository;
 use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Component\Validator\Constraints\Length;
 
 class HomeController extends AbstractController
 {
@@ -283,11 +286,6 @@ class HomeController extends AbstractController
         return $this->redirectToRoute("compte");
     }
 
-    #[Route("/contact" , name:"contact")]
-    public function contact(){
-
-        return $this->render('home/contact.html.twig');
-    }
 
     #[Route("/collection/{collection}" , name:"collection")]
     public function collection(EntityManagerInterface $em, Produit $produit){
@@ -299,6 +297,59 @@ class HomeController extends AbstractController
             'collection' => $collection
         ]);
     }
+
+    #[Route('/contact', name: 'app_contact_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ContactRepository $contactRepository): Response
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactRepository->add($contact, true);
+            
+            $this->addFlash('success', "Votre message a bien été envoyé");
+
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+        return $this->renderForm('contact/new.html.twig', [
+            'contact' => $contact,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/contact/membre', name: 'app_contact_membre', methods: ['GET', 'POST'])]
+    public function contactMembre(Request $request, ContactRepository $contactRepository): Response
+    {
+        $membre = $this->getUser();
+
+        $contact = new Contact();
+        $contact->setPrenom($membre->getPrenom())
+        ->setNom($membre->getNom())
+        ->setEmail($membre->getEmail());
+
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactRepository->add($contact, true);
+            
+            $this->addFlash('success', "Votre message a bien été envoyé");
+
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+
+
+        return $this->renderForm('contact/new.html.twig', [
+            'contact' => $contact,
+            'form' => $form,
+        ]);
+    }
+
+
+    
 
 
 }

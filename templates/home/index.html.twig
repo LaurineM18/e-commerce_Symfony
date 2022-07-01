@@ -10,7 +10,17 @@
 
 <div class="container">
     <h1 class="mt-4">Bienvenue sur My Shop! </h1>
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
 
+        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+             <span class="alert-inner--text">
+                {{ message | raw }}
+            </span>
+        </div>
+
+    {% endfor %}
+{% endfor %}
 
 <main>
   <section class="py-5 text-center container">
